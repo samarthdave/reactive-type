@@ -1,6 +1,6 @@
 # ReactiveType
 
-a typing test (as if we needed another one)
+a typing test (as if we needed another one) - built in React
 
 ### Features:
 - nothing yet...

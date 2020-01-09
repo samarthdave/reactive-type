@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
+
+// bootstrap components
+import Container from 'react-bootstrap/Container';
+
 import './style/App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-      </header>
-    </div>
-  );
+class App extends Component {
+  componentDidMount() {
+    document.title = 'ReactiveType';
+  }
+
+  render() {
+    return (
+      <Container className="App">
+        {this.props.children}
+      </Container>
+    );
+  }
 }
 
 export default App;
