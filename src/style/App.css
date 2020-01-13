@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Merriweather|Raleway|Open+Sans");
+@import url("https://fonts.googleapis.com/css?family=Merriweather|Gelasio&display=swap");
 
 html,
 body,
@@ -12,4 +12,22 @@ body,
 a {
   text-decoration: none!important;
   color: inherit;
+}
+
+/* --------------------------- */
+/* styling for text input area */
+/* --------------------------- */
+
+.selected-text {
+  text-align: center;
+}
+
+textarea.form-control { /* template text here */
+  font-family: 'Gelasio', monospace;
+  font-size: 1.5rem;
+  cursor: default;
+}
+
+#user-input { /* user types here */
+  text-align: center;
 }

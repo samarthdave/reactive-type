@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 
 import './style/App.css';
+import './style/warm-theme.css';
 
 class App extends Component {
   componentDidMount() {
