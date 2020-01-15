@@ -10,15 +10,56 @@ class Home extends Component {
   
   state = {
     selectedText: '',
-    selectedContent: ''
+    selectedContent: '',
+    // status of "game"
+    wordCount: 0,
+    wordList: [],
+    currentLoc: -1,
+    userType: ''
   }
 
   componentDidMount() {
     const text = require('./../docs/quote.json');
 
+    const selectedText = `${text.type} - ${text.author}`;
+    const selectedContent = text.content;
+
+    // make an array by splitting with spaces
+    const wordList = selectedContent.split(' ');
+    
+    if (!selectedContent || wordList.length === 0) { // error: handle later
+      return;
+    }
+
     this.setState({
-      selectedText: `${text.type} - ${text.author}`,
-      selectedContent: text.content
+      selectedText,
+      selectedContent,
+      wordList,
+      wordCount: wordList.length,
+      currentLoc: 0
+    });
+  }
+
+  // arrow syntax instead of binding
+  userTyped = (e) => {
+    const { name, value } = e.target;
+    const { currentLoc, wordList } = this.state;
+    
+    // check if the value of the box is equal to current word
+    // and if the last letter is a space
+    if (value.endsWith(' ') // short circuit
+      && value.slice(0, value.length-1) === wordList[currentLoc]) {
+      // empty the input, count up by one
+      const newState = {
+        [name]: '',
+        currentLoc: currentLoc + 1
+      };
+      this.setState(newState);
+      return;
+    }
+
+    this.setState({
+      [name]: value
     });
   }
 
@@ -30,7 +71,8 @@ class Home extends Component {
 
     const {
       selectedText,
-      selectedContent
+      selectedContent,
+      userType
     } = this.state;
 
     return (
@@ -49,7 +91,9 @@ class Home extends Component {
         </Row>
         <Row>
           <Col md={{ offset: 4, span: 4 }}>
-            <Form.Control id="user-input" size="lg" type="text" placeholder="type here..." />
+            <Form.Control value={userType} onChange={this.userTyped}
+              name="userType" id="user-input"
+              size="lg" type="text" placeholder="type here..." />
           </Col>
         </Row>
       </>
