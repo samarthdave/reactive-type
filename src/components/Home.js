@@ -84,7 +84,8 @@ class Home extends Component {
           <Col>
             <h1 style={h1Style}>ReactiveType</h1>
           </Col>
-        </Row>
+        </Row> {/* end header row */}
+
         <Row>
           <Col>
             <h4 className="selected-text">Selected text: {selectedText}</h4>
@@ -92,15 +93,28 @@ class Home extends Component {
           </Col>
           <Col>
             <ParagraphInput wordList={wordList} activeIndex={currentLoc} />
-            <FormControl readOnly value={selectedContent} rows={4} as="textarea" aria-label="replicate-content" />
           </Col>
-        </Row>
+        </Row> {/* end paragraph/content row */}
         <br />
+
         <Row>
           <Col md={{ offset: 4, span: 4 }}>
-            <Form.Control value={userType} onChange={this.userTyped}
+            <Form.Control
+              type="text"
+              placeholder="type here..."
+              autoFocus
+              onChange={this.userTyped}
               name="userType" id="user-input"
-              size="lg" type="text" placeholder="type here..." />
+              value={userType} size="lg"
+            />
+          </Col>
+        </Row> {/* enter user input row */}
+        <br />
+
+        <Row>
+          <hr />
+          <Col>
+            <FormControl readOnly value={selectedContent} rows={4} as="textarea" aria-label="replicate-content" />
           </Col>
         </Row>
       </>

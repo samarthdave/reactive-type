@@ -18,7 +18,8 @@
     "start": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "mv build/index.html build/200.html && surge --project build --domain https://type.surge.sh/"
   },
   "eslintConfig": {
     "extends": "react-app"
