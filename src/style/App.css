@@ -31,3 +31,26 @@ textarea.form-control { /* template text here */
 #user-input { /* user types here */
   text-align: center;
 }
+
+/* ---------------------------------- */
+/* transition textarea into paragraph */
+/* ---------------------------------- */
+.paragraph-input {
+  font-family: 'Gelasio', monospace;
+  font-size: 1.5rem;
+  cursor: default;
+  /* word wrap explained */
+  /* https://www.w3schools.com/cssref/css3_pr_word-wrap.asp */
+  /* very important line... */
+  word-wrap: break-word;
+}
+
+.paragraph-input span {
+  margin-right: 3px;
+  padding: 3px 6px;
+}
+
+.paragraph-input span.active {
+  background-color: #3282b8;
+  color: #bbe1fa;
+}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // react components
 import Row from 'react-bootstrap/Row';
@@ -72,7 +73,9 @@ class Home extends Component {
     const {
       selectedText,
       selectedContent,
-      userType
+      userType,
+      wordList,
+      currentLoc
     } = this.state;
 
     return (
@@ -86,6 +89,9 @@ class Home extends Component {
           <Col>
             <h4 className="selected-text">Selected text: {selectedText}</h4>
             <br />
+          </Col>
+          <Col>
+            <ParagraphInput wordList={wordList} activeIndex={currentLoc} />
             <FormControl readOnly value={selectedContent} rows={4} as="textarea" aria-label="replicate-content" />
           </Col>
         </Row>
@@ -101,5 +107,21 @@ class Home extends Component {
     );
   }
 }
+
+function ParagraphInput({ wordList, activeIndex }) {
+  return (
+    <div className="paragraph-input">
+      {wordList.map((word, i) => {
+        return <span className={`${(activeIndex === i ? 'active' : '')}`}
+                  key={i}>{word}</span>;
+      })}
+    </div>
+  );
+}
+
+ParagraphInput.propTypes = {
+  wordList: PropTypes.array,
+  activeIndex: PropTypes.number
+};
 
 export default Home;
