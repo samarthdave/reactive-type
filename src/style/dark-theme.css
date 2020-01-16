@@ -1,0 +1,31 @@
+/* color palette */
+/* https://colorhunt.co/palette/167893 */
+/* ------------- */
+
+body {
+  color: #bbe1fa; /* to celebrate the new year */
+  background-color: #0f4c75;
+}
+
+/* textarea and input box */
+textarea.form-control,
+.form-control:disabled, .form-control[readonly],
+#user-input {
+  background-color: #3282b8;
+  color: #bbe1fa;
+  border: 0;
+}
+
+/* placeholder for user input... yuck */
+#user-input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #bbe1fa;
+  opacity: 1; /* Firefox */
+}
+
+#user-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #bbe1fa;
+}
+
+#user-input::-ms-input-placeholder { /* Microsoft Edge */
+  color: #bbe1fa;
+}

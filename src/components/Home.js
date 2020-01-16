@@ -89,6 +89,7 @@ class Home extends Component {
             <FormControl readOnly value={selectedContent} rows={4} as="textarea" aria-label="replicate-content" />
           </Col>
         </Row>
+        <br />
         <Row>
           <Col md={{ offset: 4, span: 4 }}>
             <Form.Control value={userType} onChange={this.userTyped}
