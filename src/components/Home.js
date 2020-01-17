@@ -65,6 +65,7 @@ class Home extends Component {
 
   render() {
     const h1Style = {
+      fontSize: '3.75rem',
       textAlign: 'center',
       marginTop: '50px'
     };
@@ -106,7 +107,8 @@ class Home extends Component {
             <Form.Control
               type="text" className={`${isError ? 'error' : ''}`}
               placeholder="type here..."
-              autoFocus
+              autoFocus autocomplete="off"
+              autocorrect="off" autocapitalize="off" spellcheck="false"
               onChange={this.userTyped}
               name="userType" id="user-input"
               value={userType} size="lg"

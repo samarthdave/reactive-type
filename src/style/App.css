@@ -19,21 +19,17 @@ a {
 /* --------------------------- */
 
 .selected-text {
+  font-size: 2rem;
   text-align: center;
-}
-
-textarea.form-control { /* template text here */
-  font-family: 'Gelasio', monospace;
-  font-size: 1.5rem;
-  cursor: default;
 }
 
 #user-input { /* user types here */
   text-align: center;
+  font-size: 1.5rem;
 }
 
 /* ---------------------------------- */
-/* transition textarea into paragraph */
+/*   change textarea into paragraph   */
 /* ---------------------------------- */
 .paragraph-input {
   font-family: 'Gelasio', monospace;
@@ -48,6 +44,7 @@ textarea.form-control { /* template text here */
 .paragraph-input span {
   margin-right: 3px;
   padding: 3px 6px;
+  font-size: 1.8rem;
 }
 
 .paragraph-input span.active {

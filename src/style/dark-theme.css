@@ -36,3 +36,9 @@ textarea.form-control,
   color: #35495e;
   border: 0;
 }
+
+/* input focus */
+#user-input:focus {
+  outline: 0;
+  box-shadow: #bbe1fa 0 0 5px;
+}
