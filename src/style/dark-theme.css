@@ -29,3 +29,10 @@ textarea.form-control,
 #user-input::-ms-input-placeholder { /* Microsoft Edge */
   color: #bbe1fa;
 }
+
+/* user makes an error */
+#user-input.error {
+  background-color: #ea9085;
+  color: #35495e;
+  border: 0;
+}

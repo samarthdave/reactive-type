@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 // react components
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import FormControl from 'react-bootstrap/FormControl';
 import Form from 'react-bootstrap/Form';
 
 class Home extends Component {
@@ -72,11 +71,16 @@ class Home extends Component {
 
     const {
       selectedText,
-      selectedContent,
       userType,
       wordList,
       currentLoc
     } = this.state;
+
+    const currentWord = wordList[currentLoc];
+    let isError = false;
+    if (currentWord) {
+      isError = !currentWord.includes(userType);
+    }
 
     return (
       <>
@@ -100,7 +104,7 @@ class Home extends Component {
         <Row>
           <Col md={{ offset: 4, span: 4 }}>
             <Form.Control
-              type="text"
+              type="text" className={`${isError ? 'error' : ''}`}
               placeholder="type here..."
               autoFocus
               onChange={this.userTyped}
@@ -109,14 +113,14 @@ class Home extends Component {
             />
           </Col>
         </Row> {/* enter user input row */}
-        <br />
 
+        {/* <br />
         <Row>
           <hr />
           <Col>
             <FormControl readOnly value={selectedContent} rows={4} as="textarea" aria-label="replicate-content" />
           </Col>
-        </Row>
+        </Row> */}
       </>
     );
   }
