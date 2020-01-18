@@ -20,7 +20,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const text = require('./../docs/quote.json');
+    const text = require('./../media/quote.json');
 
     const selectedText = `${text.type} - ${text.author}`;
     const selectedContent = text.content;

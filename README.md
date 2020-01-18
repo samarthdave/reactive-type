@@ -2,7 +2,7 @@
 
 a typing test (as if we needed another one) - built in React
 
-### Features:
+### Features/done:
 - ~~nothing yet...~~ oh boy do we have features now
 - tracks each word and highlights
 - :heavy_check_mark: clean up Home.js (separate into diff. components?)
