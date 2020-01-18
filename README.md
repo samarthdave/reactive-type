@@ -5,11 +5,11 @@ a typing test (as if we needed another one) - built in React
 ### Features:
 - ~~nothing yet...~~ oh boy do we have features now
 - tracks each word and highlights
-- shows error/color on error
+- :heavy_check_mark: clean up Home.js (separate into diff. components?)
+- shows error/color on invalid user input
+- :heavy_check_mark: highlights each letter and compare 2 strings
 
 ### Future Features
-- clean up Home.js (separate into diff. components?)
-- highlights each letter and compares 2 strings (convert stateless --> stateful?)
 - import and text/file into the program
 - take time and calculate wpm (maybe even count errors)
 - hot swap themes

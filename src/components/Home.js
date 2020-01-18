@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import utils from '../utils';
 // react components
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -88,8 +89,13 @@ class Home extends Component {
           </Col>
         </Row> {/* end title row */}
 
-        <ParagraphInput wordList={wordList}
-            selectedText={selectedText} activeIndex={currentLoc} />
+        <Row>
+          <Col>
+            <h4 className="selected-text">Selected text: {selectedText}</h4>
+            <br />
+          </Col>
+        </Row>
+        <ParagraphInput userType={userType} wordList={wordList} activeIndex={currentLoc} />
         <br />
 
         <UserInput isError={isError} userTyped={this.userTyped} userType={userType} />
@@ -106,22 +112,29 @@ class Home extends Component {
   }
 }
 
-function ParagraphInput({ selectedText, wordList, activeIndex }) {
+function ParagraphInput({ wordList, activeIndex, userType }) {
   return (
     <Row>
       <Col>
-        <h4 className="selected-text">Selected text: {selectedText}</h4>
-        <br />
-      </Col>
-      <Col>
         <div className="paragraph-input">
           {wordList.map((word, i) => {
-            // TODO: highlight diff. in error of word
-            // & convey how many letters are wrong
+            // if current word
             if (activeIndex === i) {
-              return <span key={i} className='active'>{word}</span>;
+              // find the index until invalid text
+              const { error, loc } = utils.findSubstringLoc(word, userType);
+              // then slice at that index
+              const a = word.slice(0, loc);
+              const diffCount = userType.length - a.length;
+              const b = word.slice(loc).substring(0, diffCount);
+              const c = word.slice(loc + diffCount);
+              // split those parts up with a span
+              return <div key={i} className='active'>
+                <span className="substr-a">{a}</span>
+                <span className={`${error ? 'substr-b' : ''}`}>{b}</span>
+                <span>{c}</span>
+              </div>;
             } else {
-              return <span key={i}>{word}</span>;
+              return <div key={i}>{word}</div>;
             }
           })}
         </div>
@@ -131,9 +144,9 @@ function ParagraphInput({ selectedText, wordList, activeIndex }) {
 }
 
 ParagraphInput.propTypes = {
-  selectedText: PropTypes.string,
-  wordList: PropTypes.array,
-  activeIndex: PropTypes.number
+  wordList: PropTypes.array.isRequired,
+  activeIndex: PropTypes.number.isRequired,
+  userType: PropTypes.string.isRequired
 };
 
 function UserInput({ isError, userTyped, userType }) {

@@ -42,3 +42,12 @@ textarea.form-control,
   outline: 0;
   box-shadow: #bbe1fa 0 0 5px;
 }
+
+/* ------------------ */
+/* substring handlers */
+/* ------------------ */
+/* (user error on input) */
+
+span.substr-b {
+  color: #e89da2;
+}

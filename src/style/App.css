@@ -40,13 +40,14 @@ a {
   word-wrap: break-word;
 }
 
-.paragraph-input span {
+.paragraph-input div {
+  display: inline-block;
   margin-right: 3px;
-  padding: 3px 6px;
+  padding: 0 6px;
   font-size: 1.8rem;
 }
 
-.paragraph-input span.active {
+.paragraph-input div.active {
   background-color: #3282b8;
   color: #bbe1fa;
 }
