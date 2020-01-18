@@ -78,10 +78,7 @@ class Home extends Component {
     } = this.state;
 
     const currentWord = wordList[currentLoc];
-    let isError = false;
-    if (currentWord) {
-      isError = !currentWord.includes(userType);
-    }
+    let isError = currentWord ? !currentWord.includes(userType) : false;
 
     return (
       <>
@@ -89,32 +86,13 @@ class Home extends Component {
           <Col>
             <h1 style={h1Style}>ReactiveType</h1>
           </Col>
-        </Row> {/* end header row */}
+        </Row> {/* end title row */}
 
-        <Row>
-          <Col>
-            <h4 className="selected-text">Selected text: {selectedText}</h4>
-            <br />
-          </Col>
-          <Col>
-            <ParagraphInput wordList={wordList} activeIndex={currentLoc} />
-          </Col>
-        </Row> {/* end paragraph/content row */}
+        <ParagraphInput wordList={wordList}
+            selectedText={selectedText} activeIndex={currentLoc} />
         <br />
 
-        <Row>
-          <Col md={{ offset: 4, span: 4 }}>
-            <Form.Control
-              type="text" className={`${isError ? 'error' : ''}`}
-              placeholder="type here..."
-              autoFocus autocomplete="off"
-              autocorrect="off" autocapitalize="off" spellcheck="false"
-              onChange={this.userTyped}
-              name="userType" id="user-input"
-              value={userType} size="lg"
-            />
-          </Col>
-        </Row> {/* enter user input row */}
+        <UserInput isError={isError} userTyped={this.userTyped} userType={userType} />
 
         {/* <br />
         <Row>
@@ -128,20 +106,58 @@ class Home extends Component {
   }
 }
 
-function ParagraphInput({ wordList, activeIndex }) {
+function ParagraphInput({ selectedText, wordList, activeIndex }) {
   return (
-    <div className="paragraph-input">
-      {wordList.map((word, i) => {
-        return <span className={`${(activeIndex === i ? 'active' : '')}`}
-                  key={i}>{word}</span>;
-      })}
-    </div>
+    <Row>
+      <Col>
+        <h4 className="selected-text">Selected text: {selectedText}</h4>
+        <br />
+      </Col>
+      <Col>
+        <div className="paragraph-input">
+          {wordList.map((word, i) => {
+            // TODO: highlight diff. in error of word
+            // & convey how many letters are wrong
+            if (activeIndex === i) {
+              return <span key={i} className='active'>{word}</span>;
+            } else {
+              return <span key={i}>{word}</span>;
+            }
+          })}
+        </div>
+      </Col>
+    </Row>
   );
 }
 
 ParagraphInput.propTypes = {
+  selectedText: PropTypes.string,
   wordList: PropTypes.array,
   activeIndex: PropTypes.number
+};
+
+function UserInput({ isError, userTyped, userType }) {
+  return (
+    <Row>
+      <Col md={{ offset: 4, span: 4 }}>
+        <Form.Control
+          type="text" className={`${isError ? 'error' : ''}`}
+          placeholder="type here..."
+          autoFocus autoComplete="off"
+          autoCorrect="off" autoCapitalize="off" spellCheck="false"
+          onChange={userTyped}
+          name="userType" id="user-input"
+          value={userType} size="lg"
+        />
+      </Col>
+    </Row> // user input row
+  );
+}
+
+UserInput.propTypes = {
+  isError: PropTypes.bool.isRequired,
+  userTyped: PropTypes.func.isRequired,
+  userType: PropTypes.string.isRequired
 };
 
 export default Home;

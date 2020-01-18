@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Merriweather|Gelasio&display=swap");
-
 html,
 body,
 #root,
@@ -26,6 +24,7 @@ a {
 #user-input { /* user types here */
   text-align: center;
   font-size: 1.5rem;
+  font-family: 'Merriweather', monospace;
 }
 
 /* ---------------------------------- */

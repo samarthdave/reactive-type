@@ -18,16 +18,16 @@ textarea.form-control,
 
 /* placeholder for user input... yuck */
 #user-input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #bbe1fa;
+  color: #98b6ca;
   opacity: 1; /* Firefox */
 }
 
 #user-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: #bbe1fa;
+  color: #98b6ca;
 }
 
 #user-input::-ms-input-placeholder { /* Microsoft Edge */
-  color: #bbe1fa;
+  color: #98b6ca;
 }
 
 /* user makes an error */
