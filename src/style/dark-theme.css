@@ -49,5 +49,6 @@ textarea.form-control,
 /* (user error on input) */
 
 span.substr-b {
-  color: #e89da2;
+  background-color: #e89da2;
+  color: #3282b8;
 }

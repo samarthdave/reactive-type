@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
-import utils from '../utils';
+import ParagraphInput from './ParagraphInput';
+import UserInput from './UserInput';
 // react components
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
 
 class Home extends Component {
   
@@ -111,66 +110,5 @@ class Home extends Component {
     );
   }
 }
-
-function ParagraphInput({ wordList, activeIndex, userType }) {
-  return (
-    <Row>
-      <Col>
-        <div className="paragraph-input">
-          {wordList.map((word, i) => {
-            // if current word
-            if (activeIndex === i) {
-              // find the index until invalid text
-              const { error, loc } = utils.findSubstringLoc(word, userType);
-              // then slice at that index
-              const a = word.slice(0, loc);
-              const diffCount = userType.length - a.length;
-              const b = word.slice(loc).substring(0, diffCount);
-              const c = word.slice(loc + diffCount);
-              // split those parts up with a span
-              return <div key={i} className='active'>
-                <span className="substr-a">{a}</span>
-                <span className={`${error ? 'substr-b' : ''}`}>{b}</span>
-                <span>{c}</span>
-              </div>;
-            } else {
-              return <div key={i}>{word}</div>;
-            }
-          })}
-        </div>
-      </Col>
-    </Row>
-  );
-}
-
-ParagraphInput.propTypes = {
-  wordList: PropTypes.array.isRequired,
-  activeIndex: PropTypes.number.isRequired,
-  userType: PropTypes.string.isRequired
-};
-
-function UserInput({ isError, userTyped, userType }) {
-  return (
-    <Row>
-      <Col md={{ offset: 4, span: 4 }}>
-        <Form.Control
-          type="text" className={`${isError ? 'error' : ''}`}
-          placeholder="type here..."
-          autoFocus autoComplete="off"
-          autoCorrect="off" autoCapitalize="off" spellCheck="false"
-          onChange={userTyped}
-          name="userType" id="user-input"
-          value={userType} size="lg"
-        />
-      </Col>
-    </Row> // user input row
-  );
-}
-
-UserInput.propTypes = {
-  isError: PropTypes.bool.isRequired,
-  userTyped: PropTypes.func.isRequired,
-  userType: PropTypes.string.isRequired
-};
 
 export default Home;
