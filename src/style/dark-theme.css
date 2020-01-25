@@ -52,3 +52,11 @@ span.substr-b {
   background-color: #e89da2;
   color: #3282b8;
 }
+
+/* timer when completed */
+.timer.done span {
+  background-color: #bbe1fa;
+  color: #0f4c75;
+  padding: 0 10px;
+  cursor: pointer;
+}

@@ -82,6 +82,7 @@ class Home extends Component {
       if (isLastWord) {
         // stop & clear the timer
         clearInterval(this.state.interval);
+        this.resetGame();
       }
     
       this.setState({
@@ -106,7 +107,8 @@ class Home extends Component {
       currentLoc: 0,
       userType: '',
       // timer
-      elapsedTime: 0,
+      // NOT resetting elapsed time so user can see
+      // elapsedTime: 0,
       interval: 0,
     });
   }
@@ -123,19 +125,22 @@ class Home extends Component {
       userType,
       wordList,
       currentLoc,
-      elapsedTime
+      elapsedTime,
     } = this.state;
 
     const currentWord = wordList[currentLoc];
     let isError = currentWord ? !currentWord.includes(userType) : false;
 
+    // timer funcs.
     const timeSoFar = (elapsedTime/1000).toFixed(0);
+    const timerClassName = `timer ${currentLoc === 0 ? 'done' : ''}`;
+
     return (
       <>
         <Row>
           <Col>
             <h1 style={h1Style}>ReactiveType</h1>
-            <h1 className="timer">
+            <h1 className={timerClassName}>
               <span>{timeSoFar}:00</span>
             </h1>
           </Col>
@@ -152,13 +157,6 @@ class Home extends Component {
 
         <UserInput isError={isError} userTyped={this.userTyped} userType={userType} />
 
-        {/* <br />
-        <Row>
-          <hr />
-          <Col>
-            <FormControl readOnly value={selectedContent} rows={4} as="textarea" aria-label="replicate-content" />
-          </Col>
-        </Row> */}
       </>
     );
   }
