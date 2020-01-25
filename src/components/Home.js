@@ -5,6 +5,7 @@ import UserInput from './UserInput';
 // react components
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 // update timer every quarter of a second
 const TIMER_INTERVAL = 250;
@@ -60,7 +61,12 @@ class Home extends Component {
   // arrow syntax instead of binding
   userTyped = (e) => {
     const { name, value } = e.target;
-    const { currentLoc, wordList, elapsedTime } = this.state;
+    const { currentLoc, wordList, elapsedTime, interval } = this.state;
+
+    // if hard restart (requires manual press of reset button)
+    if (interval === -1) {
+      return;
+    }
     
     // check if has started typing
     if (!elapsedTime) {
@@ -82,7 +88,7 @@ class Home extends Component {
       if (isLastWord) {
         // stop & clear the timer
         clearInterval(this.state.interval);
-        this.resetGame();
+        this.resetGame({ softRestart: false });
       }
     
       this.setState({
@@ -98,10 +104,12 @@ class Home extends Component {
     });
   }
 
-  resetGame = () => {
+  resetGame = ({ softRestart }) => {
+    const { elapsedTime } = this.state;
+    if (softRestart && !elapsedTime) {
+      this.startCounting();
+    }
     this.setState({
-      selectedText: '',
-      selectedContent: '',
       // status of "game"
       wordCount: 0,
       currentLoc: 0,
@@ -109,8 +117,13 @@ class Home extends Component {
       // timer
       // NOT resetting elapsed time so user can see
       // elapsedTime: 0,
-      interval: 0,
+      interval: softRestart ? 0 : -1,
+      elapsedTime: softRestart ? 0.001 : elapsedTime,
     });
+  }
+
+  restartButtonPress = () => {
+    this.resetGame({ softRestart: true });
   }
 
   render() {
@@ -141,7 +154,8 @@ class Home extends Component {
           <Col>
             <h1 style={h1Style}>ReactiveType</h1>
             <h1 className={timerClassName}>
-              <span>{timeSoFar}:00</span>
+              <span>{timeSoFar}:00</span>&nbsp;
+              <Button onClick={this.restartButtonPress}>Restart</Button>
             </h1>
           </Col>
         </Row> {/* end title row */}
