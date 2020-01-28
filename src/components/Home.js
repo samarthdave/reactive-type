@@ -23,6 +23,8 @@ class Home extends Component {
     // timer
     elapsedTime: 0,
     interval: 0,
+    // show speed, total time, etc.
+    showResults: false,
   }
 
   componentDidMount() {
@@ -88,7 +90,9 @@ class Home extends Component {
       if (isLastWord) {
         // stop & clear the timer
         clearInterval(this.state.interval);
-        this.resetGame({ softRestart: false });
+        // this.resetGame({ softRestart: false });
+        // show speed results
+        this.setState({ showResults: true });
       }
     
       this.setState({
@@ -111,7 +115,6 @@ class Home extends Component {
     }
     this.setState({
       // status of "game"
-      wordCount: 0,
       currentLoc: 0,
       userType: '',
       // timer
@@ -137,8 +140,10 @@ class Home extends Component {
       selectedText,
       userType,
       wordList,
+      wordCount,
       currentLoc,
       elapsedTime,
+      showResults,
     } = this.state;
 
     const currentWord = wordList[currentLoc];
@@ -147,6 +152,15 @@ class Home extends Component {
     // timer funcs.
     const timeSoFar = (elapsedTime/1000).toFixed(0);
     const timerClassName = `timer ${currentLoc === 0 ? 'done' : ''}`;
+
+    const minutesSoFar = timeSoFar / 60;
+    const Results = showResults ? (
+      <div>
+        <h2>Word Count: {wordCount}</h2>
+        <h2>Time: {minutesSoFar}</h2>
+        <h2>Speed (wpm): {Math.round(wordCount / minutesSoFar * 100)/100}</h2>
+      </div>
+    ) : <div></div>;
 
     return (
       <>
@@ -157,6 +171,7 @@ class Home extends Component {
               <span>{timeSoFar}:00</span>&nbsp;
               <Button onClick={this.restartButtonPress}>Restart</Button>
             </h1>
+            {Results}
           </Col>
         </Row> {/* end title row */}
 
