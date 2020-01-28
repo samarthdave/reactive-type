@@ -24,8 +24,8 @@ function ParagraphInput({ wordList, activeIndex, userType }) {
               // split those parts up with a span
               return <div key={i} className='active'>
                 <span className="substr-a">{a}</span>
-                <span className={`${error ? 'substr-b' : ''}`}>{b}</span>
-                <span>{c}</span>
+                <span className={`substr-b ${error ? 'error' : ''}`}>{b}</span>
+                <span className="substr-c">{c}</span>
               </div>;
             } else {
               return <div key={i}>{word}</div>;
