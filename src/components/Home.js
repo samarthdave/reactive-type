@@ -5,10 +5,6 @@ import UserInput from './UserInput';
 // react components
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-
-// update timer every quarter of a second
-const TIMER_INTERVAL = 250;
 
 class Home extends Component {
   
@@ -20,9 +16,6 @@ class Home extends Component {
     wordList: [],
     currentLoc: -1,
     userType: '',
-    // timer
-    elapsedTime: 0,
-    interval: 0,
     // show speed, total time, etc.
     showResults: false,
   }
@@ -49,32 +42,16 @@ class Home extends Component {
     });
   }
 
-  // timer functions
-  countUp = () => {
-    this.setState(({ elapsedTime }) => ({ elapsedTime: elapsedTime + TIMER_INTERVAL }));
-  }
-  startCounting = () => {
-    this.setState({
-      elapsedTime: 0.0001,
-      interval: setInterval(this.countUp, TIMER_INTERVAL)
-    });
-  }
-
   // arrow syntax instead of binding
   userTyped = (e) => {
     const { name, value } = e.target;
-    const { currentLoc, wordList, elapsedTime, interval } = this.state;
+    const { currentLoc, wordList, interval } = this.state;
 
     // if hard restart (requires manual press of reset button)
     if (interval === -1) {
       return;
     }
     
-    // check if has started typing
-    if (!elapsedTime) {
-      this.startCounting();
-    }
-
     // check if the value of the box is equal to current word
     // and if the last letter is a space
     const isLastWord = currentLoc === wordList.length - 1;
@@ -88,11 +65,8 @@ class Home extends Component {
     if (isExactString && (value.endsWith(' ') || isLastWord)) {
       // if is last word, then quit & stop timer
       if (isLastWord) {
-        // stop & clear the timer
-        clearInterval(this.state.interval);
-        // this.resetGame({ softRestart: false });
         // show speed results
-        this.setState({ showResults: true });
+        // this.setState({ showResults: true });
       }
     
       this.setState({
@@ -108,27 +82,6 @@ class Home extends Component {
     });
   }
 
-  resetGame = ({ softRestart }) => {
-    const { elapsedTime } = this.state;
-    if (softRestart && !elapsedTime) {
-      this.startCounting();
-    }
-    this.setState({
-      // status of "game"
-      currentLoc: 0,
-      userType: '',
-      // timer
-      // NOT resetting elapsed time so user can see
-      // elapsedTime: 0,
-      interval: softRestart ? 0 : -1,
-      elapsedTime: softRestart ? 0.001 : elapsedTime,
-    });
-  }
-
-  restartButtonPress = () => {
-    this.resetGame({ softRestart: true });
-  }
-
   render() {
     const h1Style = {
       fontSize: '3.75rem',
@@ -140,38 +93,17 @@ class Home extends Component {
       selectedText,
       userType,
       wordList,
-      wordCount,
       currentLoc,
-      elapsedTime,
-      showResults,
     } = this.state;
 
     const currentWord = wordList[currentLoc];
     let isError = currentWord ? !currentWord.includes(userType) : false;
-
-    // timer funcs.
-    const timeSoFar = (elapsedTime/1000).toFixed(0);
-    const timerClassName = `timer ${currentLoc === 0 ? 'done' : ''}`;
-
-    const minutesSoFar = timeSoFar / 60;
-    const Results = showResults ? (
-      <div>
-        <h2>Word Count: {wordCount}</h2>
-        <h2>Time: {minutesSoFar}</h2>
-        <h2>Speed (wpm): {Math.round(wordCount / minutesSoFar * 100)/100}</h2>
-      </div>
-    ) : <div></div>;
 
     return (
       <>
         <Row>
           <Col>
             <h1 style={h1Style}>ReactiveType</h1>
-            <h1 className={timerClassName}>
-              <span>{timeSoFar}:00</span>&nbsp;
-              <Button onClick={this.restartButtonPress}>Restart</Button>
-            </h1>
-            {Results}
           </Col>
         </Row> {/* end title row */}
 
