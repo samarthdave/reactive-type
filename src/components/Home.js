@@ -6,6 +6,8 @@ import UserInput from './UserInput';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+import { h1Style } from './../style';
+
 class Home extends Component {
   
   state = {
@@ -83,12 +85,6 @@ class Home extends Component {
   }
 
   render() {
-    const h1Style = {
-      fontSize: '3.75rem',
-      textAlign: 'center',
-      marginTop: '50px'
-    };
-
     const {
       selectedText,
       userType,
