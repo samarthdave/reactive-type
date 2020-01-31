@@ -59,8 +59,12 @@ span.substr-b.error {
 
 /* timer when completed */
 .timer.done span {
-  background-color: #bbe1fa;
-  color: #0f4c75;
   padding: 0 10px;
   cursor: pointer;
+}
+
+.timer {
+  background-color: #bbe1fa;
+  color: #0f4c75;
+  border-radius: 10px;
 }

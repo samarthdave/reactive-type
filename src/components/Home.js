@@ -1,43 +1,47 @@
 import React, { Component } from 'react';
 
-import ParagraphInput from './ParagraphInput';
-import UserInput from './UserInput';
-// react components
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+
+// custom components
+import ParagraphInput from './ParagraphInput';
+import UserInput from './UserInput';
+import Timer from './Timer';
 
 import { h1Style } from './../style';
 
 class Home extends Component {
   
-  state = {
-    selectedText: '',
-    selectedContent: '',
-    // status of "game"
-    wordCount: 0,
-    wordList: [],
-    currentLoc: -1,
-    userType: '',
-    // show speed, total time, etc.
-    showResults: false,
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      contentTitle: '',
+      // status of "game"
+      wordCount: 0,
+      wordList: [],
+      currentLoc: -1,
+      userType: '',
+    };
+
+    this.userTyped = this.userTyped.bind(this);
   }
 
   componentDidMount() {
     const text = require('./../media/quote.json');
 
-    const selectedText = `${text.type} - ${text.author}`;
-    const selectedContent = text.content;
+    const contentTitle = `${text.type} - ${text.author}`;
+    const contentBody = text.content;
 
     // make an array by splitting with spaces
-    const wordList = selectedContent.split(' ').filter(e => e.length > 0);
+    const wordList = contentBody.split(' ').filter(e => e.length > 0);
     
-    if (!selectedContent || wordList.length === 0) { // error: handle later
+    if (!contentBody || wordList.length === 0) { // error: handle later
       return;
     }
 
     this.setState({
-      selectedText,
-      selectedContent,
+      contentTitle,
       wordList,
       wordCount: wordList.length,
       currentLoc: 0
@@ -45,48 +49,39 @@ class Home extends Component {
   }
 
   // arrow syntax instead of binding
-  userTyped = (e) => {
+  userTyped(e) {
     const { name, value } = e.target;
-    const { currentLoc, wordList, interval } = this.state;
 
-    // if hard restart (requires manual press of reset button)
-    if (interval === -1) {
-      return;
-    }
-    
-    // check if the value of the box is equal to current word
-    // and if the last letter is a space
-    const isLastWord = currentLoc === wordList.length - 1;
-    // some obscure/weird logic I wrote but don't quite understand entirely
-    let v = isLastWord ? value : value.slice(0, value.length - 1);
-    // don't ask... Actually, here goes:
-    // if the user finished typing the FINAL word in the text, don't wait for a space
-    // and stop the timer if the entire last word is successfully typed.
-    // I **could** make this more concise :P
-    const isExactString = v === wordList[currentLoc];
-    if (isExactString && (value.endsWith(' ') || isLastWord)) {
-      // if is last word, then quit & stop timer
-      if (isLastWord) {
-        // show speed results
-        // this.setState({ showResults: true });
-      }
-    
-      this.setState({
-        [name]: '',
-        // if is last word, restart the game
-        currentLoc: (isLastWord ? 0 : currentLoc + 1),
+    const { wordList, currentLoc } = this.state;
+
+    // if last character was a space, check for equality
+    const typedSpace = value[value.length - 1] === ' ';
+
+    if (!typedSpace) {
+      return this.setState({
+        [name]: value,
       });
-      return;
     }
 
-    this.setState({
-      [name]: value
-    });
+    // if the last thing typed was a space
+    // check if the substring is equal
+    const isEqual = value.slice(0, value.length - 1) === wordList[currentLoc];
+
+    if (isEqual) {
+      // increment by 1 of the current location & empty input box
+      return this.setState((prevState) => {
+        return {
+          [name]: '',
+          currentLoc: prevState.currentLoc + 1
+        };
+      });
+    }
+  
   }
 
   render() {
     const {
-      selectedText,
+      contentTitle,
       userType,
       wordList,
       currentLoc,
@@ -107,10 +102,14 @@ class Home extends Component {
 
         <Row>
           <Col>
-            <h4 className="selected-text">Selected text: {selectedText}</h4>
-            <br />
+            <h4 className="selected-text">Selected text: {contentTitle}</h4>
           </Col>
         </Row>
+        <br />
+
+        <Timer />
+        <br/>
+
         <ParagraphInput userType={userType} wordList={wordList} activeIndex={currentLoc} />
         <br />
 
