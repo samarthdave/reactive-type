@@ -95,6 +95,8 @@ class Home extends Component {
     const currentWord = wordList[currentLoc];
     let isError = currentWord ? !currentWord.includes(userType) : false;
 
+    const inputProps = { isError, userTyped: this.userTyped, userType };
+
     return (
       <>
         <Row>
@@ -112,7 +114,7 @@ class Home extends Component {
         <ParagraphInput userType={userType} wordList={wordList} activeIndex={currentLoc} />
         <br />
 
-        <UserInput isError={isError} userTyped={this.userTyped} userType={userType} />
+        <UserInput {...inputProps} />
 
       </>
     );
